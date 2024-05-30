@@ -1,0 +1,1 @@
+# This component is responsible for reading the text of the pdf document page wise.
