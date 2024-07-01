@@ -1,4 +1,4 @@
-from L1_individual_components import main
+import imports
 
 class ContractValidator:
     def __init__(self, inputPdfUrl, templatePdfUrl, agreeType , clause , heading):
@@ -10,7 +10,7 @@ class ContractValidator:
     def parsePdfHelper(self, pdfUrl):
         try:
             print("pdfurl is : ", pdfUrl,"\n\n\n")
-            pdfparser = main.PdfParser(pdfUrl)
+            pdfparser = imports.PdfParser(pdfUrl)
             text = pdfparser.readPdf()
             return text
         except Exception as err:
@@ -35,7 +35,7 @@ class ContractValidator:
     
     def performNer(self, plainText):
         try:
-            ner = main.Ner(plainText)
+            ner = imports.Ner(plainText)
             ner.ner()
             nerText = ner.printNER()
             return nerText
@@ -45,7 +45,7 @@ class ContractValidator:
     
     def classifyText(self, pdfPath):
         try:
-            classifier = main.TextClassifier(pdfPath,self.agreeType , self.heading)
+            classifier = imports.TextClassifier(pdfPath,self.agreeType , self.heading)
             paragraph = classifier.classify()
             return paragraph
         except Exception as err:
@@ -70,7 +70,7 @@ class ContractValidator:
 
     def compareText(self, paragraphs_template, paragraphs_contract):
         try:
-            textComparison = main.TextComparison(paragraphs_template ,paragraphs_contract)
+            textComparison = imports.TextComparison(paragraphs_template ,paragraphs_contract)
             dict = textComparison.comparator()
             return dict
         except Exception as err:
@@ -79,7 +79,7 @@ class ContractValidator:
         
     def highlightPdf(self,ner_dict):
         try:
-            pdfHigltr = main.PdfHighlighter(self.inputPdfUrl, ner_dict)
+            pdfHigltr = imports.PdfHighlighter(self.inputPdfUrl, ner_dict)
             public_id = pdfHigltr.highlight()
             return public_id
         except Exception as err:
@@ -88,7 +88,7 @@ class ContractValidator:
         
     def getSummary(self,ner_dict, inputText):
         try:
-            summary = main.Summary()
+            summary = imports.Summary()
             text = summary.getSummary(ner_dict, inputText)
             return text
         except Exception as err:

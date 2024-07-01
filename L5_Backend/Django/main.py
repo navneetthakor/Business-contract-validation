@@ -1,7 +1,7 @@
 import sys
 import os
 
-from ControlFlow.ContractValidator import ContractValidator
+from ContractValidator import ContractValidator
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../L1_individual_components/')))
 
