@@ -1,0 +1,154 @@
+[{
+  "_id": {
+    "$oid": "666d40d20a759c8a956b7079"
+  },
+  "agreeType": "Beta Test AgreeMent",
+  "url": "https://res.cloudinary.com/deziazvyp/image/upload/v1718431979/pdfs/BetaTestAgreement.pdf",
+  "clauses": [
+    "1. Company’s Obligations",
+    "2. Tester’s Obligations",
+    "3. Software a Trade Secret",
+    "4. Security Precautions",
+    "5. Term of Agreement",
+    "6. Return of Software and Materials",
+    "7. Disclaimer of Warranty",
+    "8. Limitation of Liability",
+    "9. No Rights Granted",
+    "10. No Assignments",
+    "11. General Provisions",
+    "12. Relationships",
+    "Severability",
+    "Integration",
+    "Waiver",
+    "Attorney Fees and Expenses",
+    "Governing Law",
+    "Jurisdiction"
+  ]
+},
+{
+  "_id": {
+    "$oid": "666d437c0a759c8a956b707a"
+  },
+  "agreeType": "Default",
+  "url": "https://res.cloudinary.com/deziazvyp/image/upload/v1718432213/pdfs/DefaultAgreement.pdf",
+  "clauses": [
+    "Scope of Services",
+    "Consideration / Compensation",
+    "Termination",
+    "Notice",
+    "Warranty",
+    "Dispute Resolution",
+    "Governing Law",
+    "Legal Fees",
+    "No Assignments",
+    "Counterparts",
+    "Electronic Signatures",
+    "Severability",
+    "Captions for Convenience",
+    "No Waiver",
+    "Amendment"
+  ]
+},
+{
+  "_id": {
+    "$oid": "666d44b20a759c8a956b707b"
+  },
+  "agreeType": "Franchise Agreement",
+  "url": "https://res.cloudinary.com/deziazvyp/image/upload/v1718432238/pdfs/FranchiseAgreement.pdf",
+  "clauses": [
+    "Parties to the Agreement",
+    "Recitals",
+    "Grant of Franchise",
+    "Franchise Fee",
+    "Location & Designated Area",
+    "Training",
+    "Development Assistance",
+    "Operations Manual",
+    "Royalties",
+    "Quality Control",
+    "Term and Termination",
+    "Restrictive Covenants",
+    "Insurance",
+    "Dispute Resolution",
+    "Governing Law",
+    "Notice",
+    "Miscellaneous Provisions",
+    "Signatures"
+  ]
+},
+{
+  "_id": {
+    "$oid": "666d455d0a759c8a956b707c"
+  },
+  "agreeType": "Influencer Agreement",
+  "url": "https://res.cloudinary.com/deziazvyp/image/upload/v1718432260/pdfs/InfluencerAgreement.pdf",
+  "clauses": [
+    "1. PURPOSE OF THE AGREEMENT",
+    "2. DESCRIPTION OF SERVICES",
+    "3. TERM",
+    "4. RELATIONSHIP OF PARTIES",
+    "5. PAYMENT",
+    "6. TERMINATION" ,
+    "7. NOTICES",
+    "8. ENTIRE AGREEMENT" 
+  ]
+},
+{
+  "_id": {
+    "$oid": "666d46910a759c8a956b707d"
+  },
+  "agreeType": "Joint Venture Agreement",
+  "url": "https://res.cloudinary.com/deziazvyp/image/upload/v1718432300/pdfs/JointVentureAgreement.pdf",
+  "clauses": [
+    "Establishment of the Company",
+    "Scope of Business",
+    "Contribution",
+    "Restriction on Transfer",
+    "Confidential Information",
+    "Duties",
+    "Responsibilities of Party A",
+    "Responsibilities of Party B",
+    "Financial Accounting",
+    "Distribution",
+    "Business Plan",
+    "Term",
+    "Default",
+    "Remedies",
+    "Arbitration",
+    "Entire Agreement",
+    "Severability",
+    "Amendment",
+    "Governing Law",
+    "Waiver of Contractual Right"
+  ]
+},
+{
+  "_id": {
+    "$oid": "666d47d80a759c8a956b707e"
+  },
+  "agreeType": "License Agreement",
+  "url": "https://res.cloudinary.com/deziazvyp/image/upload/v1718432319/pdfs/LicenseAgreement.pdf",
+  "clauses": [
+    "Definitions",
+    "License Grant",
+    "Reservation of Rights",
+    "Fees & Royalties",
+    "Records",
+    "Duration",
+    "Licensor's Representations and Warranties",
+    "Disclaimer of Warranties by Licensor",
+    "Indemnification",
+    "Insurance",
+    "Limitation of Liability",
+    "Dispute Resolution",
+    "Governing Law",
+    "Legal Fees",
+    "Further Assurances",
+    "No Assignment",
+    "Severability",
+    "No Waiver",
+    "Amendment",
+    "Counterparts",
+    "Electronic Signatures"
+  ]
+}]
