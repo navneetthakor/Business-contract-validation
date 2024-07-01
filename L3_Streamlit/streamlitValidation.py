@@ -2,18 +2,16 @@ import streamlit as st
 import time
 from pdfparser.pdfparser import PdfParser
 from ner.ner import Ner
-from pdfhighlighter.pdfhighlighter import PdfHighlighter
 from textclassifier.heading_classify import classify
 from textclassifier.textclassifier import TextClassifier
 from textcomparison.textcomparison import TextComparison
 from summary.summary import Summary
-import os 
 
 def get_pdf(key):
     pdf = st.file_uploader("Upload a file", type=["pdf"], key=key)
     if pdf:
         # st.write(os.listdir('../bcvDjangoBackend/static'))
-        filepath ='../bcvDjangoBackend/static/' + key + pdf.name
+        filepath ='./static/' + key + pdf.name
         with open(filepath , 'wb') as f:
             f.write(pdf.read())
         return  filepath

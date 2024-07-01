@@ -7,7 +7,9 @@ import requests
 from cloudinary.utils import cloudinary_url
 import urllib.parse
 from django.conf import settings
-from L1_individual_components.textclassifier.heading_classify import classify
+
+# error in this import
+from components.textclassifier.heading_classify import classify
 
 
 # flair credential
@@ -16,7 +18,7 @@ headers = {"Authorization": "Bearer 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"}
 
 
 # for contractify route 
-from ControlFlow.main import validatContract
+from main import validatContract
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
