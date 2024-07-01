@@ -1,0 +1,6 @@
+from L1_individual_components.pdfparser.pdfparser import PdfParser
+from L1_individual_components.ner.ner import Ner
+from L1_individual_components.textclassifier.textclassifier import TextClassifier
+from L1_individual_components.textcomparison.textcomparison import TextComparison
+from L1_individual_components.pdfhighlighter.pdfhighlighter import PdfHighlighter
+from L1_individual_components.summary.summary import Summary
