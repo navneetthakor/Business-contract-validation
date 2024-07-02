@@ -3,7 +3,7 @@ from pdfminer.layout import LTTextContainer, LTTextLine, LTChar, LTAnno
 
 
 def classify(pdf_path):
-    bold_texts = []
+    headings = []
     current_bold_text = ""
 
     for page_layout in extract_pages(pdf_path):
@@ -16,14 +16,15 @@ def classify(pdf_path):
                                 if "Bold" in character.fontname:
                                     current_bold_text += character.get_text()
                                 elif current_bold_text:
-                                    bold_texts.append(current_bold_text.strip())
+                                    headings.append(current_bold_text.strip())
                                     current_bold_text = ""
                             elif isinstance(character, LTAnno):
                                 if current_bold_text:
                                     current_bold_text += character.get_text()
                         if current_bold_text:
-                            bold_texts.append(current_bold_text.strip())
+                            headings.append(current_bold_text.strip())
                             current_bold_text = ""
 
-    return bold_texts
-
+    print(headings)
+    
+    return headings
