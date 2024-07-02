@@ -1,16 +1,29 @@
-import pymupdf
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LTTextContainer, LTTextLine, LTChar, LTAnno
 
-def classify(pdfPath):
-    headings = []
-    pdf = pymupdf.open(pdfPath)
-    for page in pdf:
-        blocks = (page.get_text("dict")["blocks"])
-        for block in blocks:
-            for line in block['lines']:
-                for span in line['spans']:
-                    if(span['flags'] != 0):
-                        if(len(span['text']) > 3 ):
-                            headings.append(span['text'])
-    print(headings)
 
-    return headings
+def classify(pdf_path):
+    bold_texts = []
+    current_bold_text = ""
+
+    for page_layout in extract_pages(pdf_path):
+        for element in page_layout:
+            if isinstance(element, LTTextContainer):
+                for text_line in element:
+                    if isinstance(text_line, LTTextLine):
+                        for character in text_line:
+                            if isinstance(character, LTChar):
+                                if "Bold" in character.fontname:
+                                    current_bold_text += character.get_text()
+                                elif current_bold_text:
+                                    bold_texts.append(current_bold_text.strip())
+                                    current_bold_text = ""
+                            elif isinstance(character, LTAnno):
+                                if current_bold_text:
+                                    current_bold_text += character.get_text()
+                        if current_bold_text:
+                            bold_texts.append(current_bold_text.strip())
+                            current_bold_text = ""
+
+    return bold_texts
+
