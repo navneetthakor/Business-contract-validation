@@ -12,6 +12,7 @@ class TextComparison:
     self.dict = ()
     self.combined_input = ""
     self.model = None
+    self.deviation_words = []
    
     genai.configure(api_key="AIzaSyABsR-Bcf2G2jnuwMIhGB0E2L-AlQkUdVE")
 
@@ -63,7 +64,10 @@ class TextComparison:
        if heading in self.paragraphs_template:
           result = self.individual_comparator(self.paragraphs_template[heading] , paragraph )
           dict_heading.append(heading)
-          dict_text.append(result)
+          dict_text.append(result['deviation_text'])
+          temp = result['deviation_words']
+          for words in temp:
+                  self.deviation_words.append(words)
        else :
           print("heading is missing \n The heading is not present in the provided template or old contract\n\n")
           
@@ -77,11 +81,10 @@ class TextComparison:
     # and the dict was not hashable which was require by the control flow contractvalidatior.py file function , hence changed the dict to tuple which is hashable
     self.dict = tuple(temp_dict.items())
 
-    return self.dict
+    return self.dict , self.deviation_words
       
 
   def printComparison(self):
     print("dummy comparator print method")
     for key, value in self.dict.items():
       print(f"Key: {key}, Value: {value}")
-
