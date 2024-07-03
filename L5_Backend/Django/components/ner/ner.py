@@ -27,7 +27,9 @@ class Ner:
     print('The following NER tags are found:')
     ner_dict = {}
     for dicts in self.output:
-      ner_dict[dicts["word"]] = [dicts["entity_group"], dicts["score"]]
+      if(dicts["entity_group"] != "CARDINAL"):
+        if(dicts["score"] > 0.98 or dicts["entity_group"] == "GPE" ):
+          ner_dict[dicts["word"]] = [dicts["entity_group"], dicts["score"]]
     
     print(ner_dict)
     hashable_ner_dict = tuple(ner_dict.items())

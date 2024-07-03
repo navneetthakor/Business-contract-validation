@@ -25,6 +25,12 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
         print(inputPdfNer)
         hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
 
+
+
+        # highligh pdf 
+        print("Performing highlighting :\n")
+        highlitedPdf = model.highlightPdf(inputPdfNer)
+        
         # classify text 
         print("Performing classification :\n")
         inputClassifiedText = model.classifyInputText()
@@ -35,12 +41,7 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
 
         print("Finding deviations :\n")
         # compare classified text 
-        dev_dic , dev_words = model.compareText(inputClassifiedText, templateClassifiedText)
-
-        # highligh pdf 
-        print("Performing highlighting :\n")
-        highlitedPdf = model.highlightPdf(dev_words)
-        
+        compare_dic = model.compareText(inputClassifiedText, templateClassifiedText)
 
         print("Printing summary :\n")
         # summary of pdf 
@@ -49,7 +50,7 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
         # returning output
         print("Returning to node server :\n")
         return {
-            "compare_dic": dev_dic,
+            "compare_dic": compare_dic,
             "highlitedPdf": highlitedPdf,
             "summary": summary,
             "ner_dict": inputPdfNer

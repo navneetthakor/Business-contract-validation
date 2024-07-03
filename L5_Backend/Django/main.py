@@ -5,17 +5,17 @@ from ContractValidator import ContractValidator
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../L1_individual_components/')))
 
-def validatContract(inputPdf, templatePdf, heading):
+def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
 
     try:
 
         # creating model 
-        model = ContractValidator(inputPdf, templatePdf , heading)
+        model = ContractValidator(inputPdf, templatePdf, agreeType , clasue , heading)
 
         # parsing pdfs 
         print("Parsing pdf :\n")
         inputText = model.parseInputPdf()
-        # templateText = model.parseTemplatePdf()
+        templateText = model.parseTemplatePdf()
 
 
         # ner for input pdf 
@@ -23,17 +23,13 @@ def validatContract(inputPdf, templatePdf, heading):
         inputPdfNer = model.performNer(inputText)
         print("Printing ner response :\n\n")
         print(inputPdfNer)
-<<<<<<< HEAD
-        # hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
+        hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
 
 
 
         # highligh pdf 
         print("Performing highlighting :\n")
         highlitedPdf = model.highlightPdf(inputPdfNer)
-=======
-        hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
->>>>>>> 169ffb0be572af4dd1f52eaeb630c178bb1b1826
         
         # classify text 
         print("Performing classification :\n")
@@ -42,14 +38,10 @@ def validatContract(inputPdf, templatePdf, heading):
 
         print("inputclassifiedtext:\n", inputClassifiedText,'\n\n\n')
         print("tempclassifiedtext:\n", templateClassifiedText,'\n\n\n')
-            
-         print("Finding deviations :\n")
-        # compare classified text 
-        dev_dic , dev_words = model.compareText(inputClassifiedText, templateClassifiedText)
 
-        # highligh pdf 
-        print("Performing highlighting :\n")
-        highlitedPdf = model.highlightPdf(dev_words)
+        print("Finding deviations :\n")
+        # compare classified text 
+        compare_dic = model.compareText(inputClassifiedText, templateClassifiedText)
 
         print("Printing summary :\n")
         # summary of pdf 
@@ -58,7 +50,7 @@ def validatContract(inputPdf, templatePdf, heading):
         # returning output
         print("Returning to node server :\n")
         return {
-            "compare_dic": dev_dic,
+            "compare_dic": compare_dic,
             "highlitedPdf": highlitedPdf,
             "summary": summary,
             "ner_dict": inputPdfNer

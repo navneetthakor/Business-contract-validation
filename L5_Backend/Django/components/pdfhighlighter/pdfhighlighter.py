@@ -62,4 +62,3 @@ class PdfHighlighter:
 
         except Exception as err:
           print(f"Error occurred while highlighting pdf : {err}")
-
