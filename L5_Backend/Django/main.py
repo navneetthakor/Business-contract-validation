@@ -48,7 +48,7 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
         # returning output
         print("Returning to node server :\n")
         return {
-            "compare_dic": compare_dic,
+            "compare_dic": dev_dic,
             "highlitedPdf": highlitedPdf,
             "summary": summary,
             "ner_dict": inputPdfNer
