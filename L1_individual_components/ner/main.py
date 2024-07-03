@@ -4,7 +4,7 @@ from ner import Ner
 def main():
 
     # Instantiating an NER instance of  Ner class
-    nerInstance = Ner("hlo")
+    nerInstance = Ner("pdf text to be passed at initialization.")
 
     # NER main function for making entity relations
     nerInstance.ner()
