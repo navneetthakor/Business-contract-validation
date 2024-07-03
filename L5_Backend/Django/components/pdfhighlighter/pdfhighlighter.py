@@ -29,7 +29,7 @@ class PdfHighlighter:
 
             # STATIC_ROOT_PATH = os.path.join(settings.BASE_DIR, settings.STATIC_ROOT)
 
-            highligh_pdf_path = os.path.join('./static/', 'highlighted.pdf')
+            highligh_pdf_path = os.path.join('./bcvDjangoBackend/static/', 'highlighted.pdf')
             # Save the modified PDF
             print("path for highlight is : ", highligh_pdf_path,"\n\n\n")
 

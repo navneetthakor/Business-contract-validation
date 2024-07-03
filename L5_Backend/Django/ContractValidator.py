@@ -2,10 +2,9 @@
 from components import imports
 
 class ContractValidator:
-    def __init__(self, inputPdfUrl, templatePdfUrl, agreeType , clause , heading):
+    def __init__(self, inputPdfUrl, templatePdfUrl , heading):
         self.inputPdfUrl = inputPdfUrl
         self.templatePdfUrl = templatePdfUrl
-        self.agreeType = agreeType
         self.heading = heading
     
     def parsePdfHelper(self, pdfUrl):
@@ -46,7 +45,7 @@ class ContractValidator:
     
     def classifyText(self, pdfPath):
         try:
-            classifier = imports.TextClassifier(pdfPath,self.agreeType , self.heading)
+            classifier = imports.TextClassifier(pdfPath, self.heading)
             paragraph = classifier.classify()
             return paragraph
         except Exception as err:

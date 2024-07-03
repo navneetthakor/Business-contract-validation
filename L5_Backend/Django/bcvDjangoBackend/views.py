@@ -73,8 +73,6 @@ def contractify(request):
             data = json.loads(request.body)
             inputUrl = data.get('inputUrl')
             templateUrl = data.get('templateUrl')
-            agreeType = data.get('agreeType')
-            clauses = data.get('clauses')
 
             # save pdfs 
             print("input going to be saved\n\n\n\n")
@@ -85,7 +83,7 @@ def contractify(request):
             headings = classify(templateLocalUrl)
             
             # Process the data
-            response_data = validatContract(inputLocalUrl, templateLocalUrl, agreeType, clauses , headings)
+            response_data = validatContract(inputLocalUrl, templateLocalUrl, headings)
 
             print(response_data)
 

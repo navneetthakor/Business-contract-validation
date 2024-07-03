@@ -5,17 +5,17 @@ from ContractValidator import ContractValidator
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../L1_individual_components/')))
 
-def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
+def validatContract(inputPdf, templatePdf, heading):
 
     try:
 
         # creating model 
-        model = ContractValidator(inputPdf, templatePdf, agreeType , clasue , heading)
+        model = ContractValidator(inputPdf, templatePdf , heading)
 
         # parsing pdfs 
         print("Parsing pdf :\n")
         inputText = model.parseInputPdf()
-        templateText = model.parseTemplatePdf()
+        # templateText = model.parseTemplatePdf()
 
 
         # ner for input pdf 
@@ -23,7 +23,7 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
         inputPdfNer = model.performNer(inputText)
         print("Printing ner response :\n\n")
         print(inputPdfNer)
-        hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
+        # hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
 
 
 

@@ -10,10 +10,9 @@ import re
 
 class TextClassifier:
   
-  def __init__(self, pdfPath , ContractType , heading):
+  def __init__(self, pdfPath , heading):
     self.pdfPath = pdfPath
     self.paragraphs = None
-    self.ContractType = ContractType
     self.heading = heading
 
   def levenshtein_sim(self , head, headings):
