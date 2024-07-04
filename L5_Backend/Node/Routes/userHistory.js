@@ -10,7 +10,7 @@ const getUserHistory = require('../Controllers/userHistory/getUserHistory.js');
 
 
 // --------------------------ROUTE:2 to fetch userHistory ----------------------------------------------------------
-router.get('/getUserHistory',
+router.post('/getUserHistory',
 fetchUser,
 getUserHistory);
 

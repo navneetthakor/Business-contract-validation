@@ -93,7 +93,7 @@ async (req, res) => {
 
     // return ans -----------
     return res.status(200).json({
-      newDataEntry,
+      data: newDataEntry,
       success: true,
     });
   } catch (error) {

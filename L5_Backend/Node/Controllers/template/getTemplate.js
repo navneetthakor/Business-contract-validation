@@ -23,7 +23,7 @@ const addTemplate = async (req, res) => {
     return res.status(200).json({ templates: templates, success: true });
 
   } catch (error) {
-    console.log(e);
+    console.log(error);
     res.status(500).json({ error: "Internal server error", success: false});
   }
 };

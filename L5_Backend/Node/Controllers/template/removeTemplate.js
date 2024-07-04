@@ -4,6 +4,7 @@ const Template = require("../../Model/Template");
 const removeTemplate = async (req, res) => {
   try {
     if (!req.body.version) {
+      console.log(req.body.version);
       return res.status(400).json({ error: "Please provide version to remove", success: false });
     }
 
