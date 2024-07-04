@@ -22,7 +22,7 @@
 -   The user can view the contents delivered to him and also can download the contract and the highlighted contract for future use.  
   
 
-### Note : You may encounter errors while finding deviations. It depends on the API-KEY you use. The current API-KEY is of free plan and thus may lead to some missing deviations. A paid API-KEY will perform more efficiently.
+### Note : You may encounter errors while finding deviations. It depends on the API key you use. The current API key is of free plan and thus may lead to some missing deviations. A paid API key will perform more efficiently.
 
 # Steps to run:
 
