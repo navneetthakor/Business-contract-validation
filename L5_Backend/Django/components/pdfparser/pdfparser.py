@@ -18,9 +18,11 @@ class PdfParser:
       for page in pdf:
         self.text += page.get_text()
         self.text += "\n\n"
+      print("pdf parsed successfully")
       return self.text
     except Exception as err:
       print(f"Error occured while reading pdf : {err}")
 
   def printPdf(self):
-    print(self.text)
+    pass;
+    # print(self.text)

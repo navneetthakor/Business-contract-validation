@@ -71,7 +71,7 @@ class TextClassifier:
     try:
       self.paragraphs = self.extract_paragraphs(self.pdfPath, self.heading)
 
-      print(self.paragraphs)
+      # print(self.paragraphs)
         
       print("dummy text classifier method")
       return self.paragraphs
@@ -80,5 +80,5 @@ class TextClassifier:
 
   def printClassify(self):
     print("dummy classify print method")
-    for heading, paragraph in self.paragraphs.items():
-      print(f"{heading}:\n{paragraph}\n\n")
+    # for heading, paragraph in self.paragraphs.items():
+      # print(f"{heading}:\n{paragraph}\n\n")

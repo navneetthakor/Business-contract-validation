@@ -34,6 +34,7 @@ class Summary :
 
   def getSummary(self, nerText, plainText):
     try:
+      print("Starting summary")
       response = self.model.generate_content([
         "input: * **Document:** \"The Acme Corporation is pleased to announce a new partnership   with GreenTech Solutions to develop a sustainable energy project in California. The   project, which is expected to be completed by December 2025 , will have a budget of $10   million. John Smith, CEO of Acme Corporation, will oversee the project.\" * **NER   Results:** [{'The Acme Corporation': ['ORG', 0.9999966224034628], 'GreenTech Solutions': ['ORG', 0.9999956488609314], 'California': ['GPE', 0.9999967813491821], 'December 2025': ['DATE', 0.9999942183494568], '$10 million': ['MONEY', 0.9999931653340658], 'John Smith': ['PERSON', 0.9999985098838806], 'Acme Corporation': ['ORG', 0.9999963641166687]}]",
 
@@ -44,7 +45,8 @@ class Summary :
         "output: ",
       ])
 
-      print(response.text)
+      # print(response.text)
+      print("Summary done.")
       return response.text
     except Exception as err:
       print(err)

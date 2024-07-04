@@ -22,7 +22,7 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
         print("Performing NER :\n")
         inputPdfNer = model.performNer(inputText)
         print("Printing ner response :\n\n")
-        print(inputPdfNer)
+        # print(inputPdfNer)
         hashable_ner_dict = tuple(sorted(inputPdfNer.items()))
         
         # classify text 
@@ -30,8 +30,8 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
         inputClassifiedText = model.classifyInputText()
         templateClassifiedText = model.classifyTemplateText()
 
-        print("inputclassifiedtext:\n", inputClassifiedText,'\n\n\n')
-        print("tempclassifiedtext:\n", templateClassifiedText,'\n\n\n')
+        # print("inputclassifiedtext:\n", inputClassifiedText,'\n\n\n')
+        # print("tempclassifiedtext:\n", templateClassifiedText,'\n\n\n')
 
         print("Finding deviations :\n")
         # compare classified text 

@@ -93,18 +93,18 @@ class TextComparison:
     #directly adding key-pair value to dictinary was not working , so alternative approach of using list then converting it into the dict
 
     temp_dict = dict(zip(dict_heading, dict_text))
-    for key, value in temp_dict.items():
-      print(f"Key: {key}, Value: {value}")
+    # for key, value in temp_dict.items():
+      # print(f"Key: {key}, Value: {value}")
 
     # and the dict was not hashable which was require by the control flow contractvalidatior.py file function , hence changed the dict to tuple which is hashable
     self.dict = tuple(temp_dict.items())
 
-    print(self.dev_list)
+    print("self dev list is \n\n",self.dev_list)
 
     return self.dict , self.dev_list
       
 
   def printComparison(self):
     print("dummy comparator print method")
-    for key, value in self.dict.items():
-      print(f"Key: {key}, Value: {value}")
+    # for key, value in self.dict.items():
+      # print(f"Key: {key}, Value: {value}")

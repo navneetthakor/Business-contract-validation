@@ -18,13 +18,13 @@ class Ner:
       # self.output = self.query({
 	    # "inputs": f"{self.text}"})
 
-      print("self text is :", self.text)
+      # print("self text is :", self.text)
 
 
       self.sentence = Sentence(self.text)
       tagger.predict(self.sentence)
       print("NER performed successfully.")
-      print('The following NER tags are found:')
+      # print('The following NER tags are found:')
 
       # print("self.output was : ", self.output)
       
@@ -33,7 +33,7 @@ class Ner:
 
   def printNER(self):
     
-    print('The following NER tags are found:')
+    # print('The following NER tags are found:')
     ner_dict = {}
     # iterate over entities and print
     for entity in self.sentence.get_spans('ner'):

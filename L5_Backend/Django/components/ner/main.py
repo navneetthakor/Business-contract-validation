@@ -11,7 +11,7 @@ def main():
 
     # NER method for printing the entities
     ner_dict = nerInstance.printNER()
-    print(ner_dict)
+    # print(ner_dict)
 
 if __name__ == "__main__":
     main()

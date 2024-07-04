@@ -15,7 +15,7 @@ class PdfHighlighter:
             print("\n\n\nhighlighting user pdf.....\n")
 
             doc = pymupdf.open(self.pdf_path)
-            print(doc,"\n\n\n")
+            # print(doc,"\n\n\n")
 
             for page in doc:
                 for word in self.deviation_words:
