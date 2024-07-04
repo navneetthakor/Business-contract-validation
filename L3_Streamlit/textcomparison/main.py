@@ -1,4 +1,4 @@
-from textcomparison import TextComparison
+from textcomparison2 import TextComparison
 import os
 import json
 import google.generativeai as genai
