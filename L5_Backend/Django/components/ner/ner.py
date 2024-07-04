@@ -37,7 +37,9 @@ class Ner:
     ner_dict = {}
     # iterate over entities and print
     for entity in self.sentence.get_spans('ner'):
-      ner_dict[entity.text] = [entity.get_label('ner').value, entity.score]
+      if(entity.get_label('ner').value != 'CARDINAL'):
+        if(entity.get_label('ner').value == 'GPE' or entity.score > 0.98):
+          ner_dict[entity.text] = [entity.get_label('ner').value, entity.score]
     
     # print(ner_dict)
     return ner_dict

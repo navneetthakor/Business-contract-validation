@@ -16,10 +16,10 @@ class TextComparison:
     genai.configure(api_key="AIzaSyABsR-Bcf2G2jnuwMIhGB0E2L-AlQkUdVE")
 
     generation_config = {
-      "temperature": 1,
-      "top_p": 0.95,
-      "top_k": 64,
-      "max_output_tokens": 8192,
+      "temperature": 0.85,
+      "top_p": 0.9,
+      "top_k": 32,
+      "max_output_tokens": 1024,
       "response_mime_type": "text/plain",
     }
       
@@ -29,7 +29,7 @@ class TextComparison:
     )
 
   def individual_comparator(self, template_text, contract_text):
-    combined_input = f"input: \"template text\": \"{template_text}\"\n\n\"contract text\": \"{contract_text}\"\n\nquery: find the difference in contract text in the context of the template text and provide it in brief"
+    combined_input = f"input: \"template text\": \"{template_text}\"\n\n\"contract text\": \"{contract_text}\"\n\nquery: find the difference in contract text in the context of the template text and provide it in brief. If no deviations are found, just print false, nothing else."
     
     try:
       result = self.model.generate_content([combined_input])
@@ -58,10 +58,12 @@ class TextComparison:
     for heading, paragraph in self.paragraphs_contract.items():
       if heading in self.paragraphs_template:
         deviation_text = self.individual_comparator(self.paragraphs_template[heading], paragraph)
+        time.sleep(1)
         if deviation_text:
           dict_heading.append(heading)
           dict_text.append(deviation_text)
           deviation_words = self.find_deviation_words(self.paragraphs_template[heading], paragraph)
+          time.sleep(1)
           self.dev_list.extend(deviation_words)
       else:
         print(f"Heading '{heading}' is missing in the provided template or old contract")
