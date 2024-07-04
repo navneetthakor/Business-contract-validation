@@ -29,11 +29,11 @@ class TextComparison:
     )
 
   def individual_comparator(self, template_text, contract_text):
-    combined_input = f"input: \"template text\": \"{template_text}\"\n\n\"contract text\": \"{contract_text}\"\n\nquery: find the difference in contract text in the context of the template text and provide it in brief. If no deviations are found, just print false, nothing else."
+    combined_input = f"input: \"template text\": \"{template_text}\"\n\n\"contract text\": \"{contract_text}\"\n\nquery: find the difference in contract text in the context of the template text and provide it in brief. If no deviations are found, just print false, nothing else. If deviations are found express it in proper sentence."
     
     try:
       result = self.model.generate_content([combined_input])
-      time.sleep(1)  # Adding a delay to prevent rate limiting
+    #   time.sleep(1)  # Adding a delay to prevent rate limiting
       return result.text
     except Exception as err:
       print(f"Error occurred while comparing texts: {err}")
@@ -44,7 +44,7 @@ class TextComparison:
 
     try:
       result = self.model.generate_content([combined_input])
-      time.sleep(1)  # Adding a delay to prevent rate limiting
+    #   time.sleep(1)  # Adding a delay to prevent rate limiting
       words = re.findall(r'\"(.+?)\"', result.text)
       return words
     except Exception as err:
@@ -79,25 +79,3 @@ class TextComparison:
 
     print("Deviation Words List:")
     print(self.dev_list)
-
-# template = {
-#     "Introduction": '''Party B:Navneet InfoTech, having its principal place of business at MotaBazar Anand, 
-# Austin, TX 78701 ("Seller").''',
-# "Formation": '''2. Purchase and Delivery
-# 2.1 Purchase: Purchaser agrees to purchase, and Seller agrees to sell, the Software listed in 
-# Exhibit A.
-# '''
-# }
-
-# contract = {
-#   "Introduction": '''Party B:Rohanshu Solutions Inc., having its principal place of business at 456 Software Avenue, 
-# Austin, TX 78701 ("Seller").''',
-# "Formation": '''2. Purchase and Delivery
-# 2.1 Purchase: Purchaser do not agree to purchase, and Seller agrees to sell, the Software listed in 
-# Exhibit A.
-# '''
-# }
-
-# comparison = TextComparison(template, contract)
-# result_dict, dev_words = comparison.comparator()
-# comparison.printComparison()
