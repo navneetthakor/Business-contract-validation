@@ -1,7 +1,10 @@
-import requests
+from flair.data import Sentence
+from flair.models import SequenceTagger
 
-API_URL = "https://api-inference.huggingface.co/models/flair/ner-english-ontonotes-large"
-headers = {"Authorization": "Bearer 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"}
+tagger = SequenceTagger.load("flair/ner-english-ontonotes-large")
+
+# API_URL = "https://api-inference.huggingface.co/models/flair/ner-english-ontonotes-large"
+# headers = {"Authorization": "Bearer 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"}
 
 class Ner:
   def __init__(self, pdfText):
@@ -12,10 +15,16 @@ class Ner:
   def ner(self):
     try:
       print("Starting NER Task.....\n\n")
-      self.output = self.query({
-	    "inputs": f"{self.text}"})
-      
+      # self.output = self.query({
+	    # "inputs": f"{self.text}"})
+
+      print("self text is :", self.text)
+
+
+      self.sentence = Sentence(self.text)
+      tagger.predict(self.sentence)
       print("NER performed successfully.")
+      print('The following NER tags are found:')
 
       # print("self.output was : ", self.output)
       
@@ -26,17 +35,15 @@ class Ner:
     
     print('The following NER tags are found:')
     ner_dict = {}
-    for dicts in self.output:
-      if(dicts["entity_group"] != "CARDINAL"):
-        if(dicts["score"] > 0.98 or dicts["entity_group"] == "GPE" ):
-          ner_dict[dicts["word"]] = [dicts["entity_group"], dicts["score"]]
+    # iterate over entities and print
+    for entity in self.sentence.get_spans('ner'):
+      ner_dict[entity.text] = [entity.get_label('ner').value, entity.score]
     
-    print(ner_dict)
-    hashable_ner_dict = tuple(ner_dict.items())
+    # print(ner_dict)
     return ner_dict
 
       
-  @staticmethod
-  def query(payload):
-    response = requests.post(API_URL, headers=headers, json=payload)
-    return response.json()
+  # @staticmethod
+  # def query(payload):
+    # response = requests.post(API_URL, headers=headers, json=payload)
+    # return response.json()
