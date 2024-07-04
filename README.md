@@ -1,10 +1,10 @@
 # Business-contract-validation
 
-## Team Namme : BVM Mavericks
+### Team Name : BVM Mavericks
 
-## Project Title : Business Contract Validation
+### Project Title : Business Contract Validation
 
-## Team Members : Ronak Vekariya, Rohanshu Banodha, Navneetkumar Thakor
+### Team Members : Ronak Vekariya, Rohanshu Banodha, Navneetkumar Thakor
 
 ### Idea:
 
