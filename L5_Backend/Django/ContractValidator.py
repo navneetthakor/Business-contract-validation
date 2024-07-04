@@ -72,15 +72,15 @@ class ContractValidator:
     def compareText(self, paragraphs_template, paragraphs_contract):
         try:
             textComparison = imports.TextComparison(paragraphs_template ,paragraphs_contract)
-            dict = textComparison.comparator()
-            return dict
+            result_dict, dev_words = textComparison.comparator()
+            return result_dict, dev_words
         except Exception as err:
             print(f"Error occured while text comparison: {err}")
             raise Exception(f"Error occured while text comparison: {err}")
         
-    def highlightPdf(self,ner_dict):
+    def highlightPdf(self,dev_words):
         try:
-            pdfHigltr = imports.PdfHighlighter(self.inputPdfUrl, ner_dict)
+            pdfHigltr = imports.PdfHighlighter(self.inputPdfUrl, dev_words)
             public_id = pdfHigltr.highlight()
             return public_id
         except Exception as err:

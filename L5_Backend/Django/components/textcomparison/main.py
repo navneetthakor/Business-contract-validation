@@ -1,4 +1,4 @@
-from textcomparison import TextComparison
+from textcomparison2 import TextComparison
 import os
 import json
 import google.generativeai as genai
@@ -9,7 +9,7 @@ def main():
     # Instantiating an NER instance of  Ner class
     comparisonInstance = TextComparison(paragraphs_template ,paragraphs_contract)
 
-    dict = comparisonInstance.comparator()
+    result_dict, dev_words = comparisonInstance.comparator()
   
     # print(dict)
     

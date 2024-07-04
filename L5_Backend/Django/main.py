@@ -35,7 +35,7 @@ def validatContract(inputPdf, templatePdf,agreeType, clasue , heading):
 
         print("Finding deviations :\n")
         # compare classified text 
-        dev_dic , dev_words = model.compareText(inputClassifiedText, templateClassifiedText)
+        dev_dic , dev_words = model.compareText(templateClassifiedText, inputClassifiedText)
 
         # highligh pdf 
         print("Performing highlighting :\n")
