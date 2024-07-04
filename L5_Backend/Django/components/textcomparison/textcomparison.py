@@ -2,6 +2,7 @@
 import os
 import json
 import google.generativeai as genai
+import re
 
 class TextComparison:   
         
@@ -11,6 +12,8 @@ class TextComparison:
     self.paragraphs_contract = paragraphs_contract
     self.dict = ()
     self.combined_input = ""
+    self.dev_text = ""
+    self.dev_list = []
     self.model = None
    
     genai.configure(api_key="AIzaSyABsR-Bcf2G2jnuwMIhGB0E2L-AlQkUdVE")
@@ -36,8 +39,17 @@ class TextComparison:
     "output: 1.the date of agreement is not mentioned in contract text\n2.the address of the party b is not  mentioned in contract text",
     "input: \"template text\" : \"Formation of Joint Venture: The Parties hereby agree to form the Joint Venture in accordance with the terms and conditions of this Agreement and applicable laws.Purpose: The purpose of the Joint Venture shall be to develop, market, and sell a new software product.Management: The management of the Joint Venture shall be conducted by a board of directors consisting of three directors, with each Party appointing one director and jointly appointing the third director.Capital Contribution: Each Party shall contribute to the Joint Venture the following capital contribution: ABC Industries Inc. shall contribute $500,000 in cash, and XYZ Enterprises Ltd. shall contribute $300,000 in cash.Distribution of Profits and Losses: Profits and losses of the Joint Venture shall be distributed among the Parties in proportion to their respective ownership interests.Confidentiality: The Parties agree to maintain the confidentiality of all information relating to the Joint Venture and its operations.Term and Termination: The Joint Venture shall commence on the date of this Agreement and shall continue until terminated by mutual agreement of the Parties.Governing Law: This Agreement shall be governed by and construed in accordance with the laws of the State of California.\n\"\n\n\"contract text\" : \"Formation of Joint Venture: The Parties hereby agree to form the Joint Venture in accordance with the terms and conditions of this Agreement and applicable laws.\n\nPurpose: The purpose of the Joint Venture shall be to develop, market, and sell a new software product.\n\nManagement: The management of the Joint Venture shall be conducted by a board of directors consisting of three directors, with each Party appointing one director and jointly appointing the third director.\n\nDistribution of Profits and Losses: Profits and losses of the Joint Venture shall be entitled to mavericks Industries Inc.\n\nConfidentiality: The Parties agree to maintain the confidentiality of all information relating to the Joint Venture and its operations.\n\nTerm and Termination: The Joint Venture shall commence on the date of this Agreement and shall continue until terminated by mutual agreement of the Parties.\n\"\n\nquery : find the difference in contract text in the context of the template text\nand provide it in brief",
     "output: 1. detail on Capital Contribution is missing in the contract text.\n2. Distribution of Profits and Losses is entitled to mavericks which is not accordance with the template text\n3. detail on governing law is missing in the contract text.",
-    "input: \"template text\" : \"The term of this Agreement shall commence on the effective date of this Agreement and shall\nterminate on the TERMINATION DATE, during which time the Influencer will create Instagram\ncontent (as described above) for 3 days out of the month of ____________ and one in-feed post\nthat shall not be deleted within one year following its publication. The content shall clearly\nidentify the Brand by stating its name and tagging its official Instagram account. The Influencer\nmay choose which days in ____________ to post the content for Brand's advertising campaign.\nBeyond the 3 days of stories and the in-feed post, the Influencer is free to publish any additional\ncontent, featuring the Brand and its products - with respect to the Brand's intellectual property. \n\"\n\n\"contract text\" : \"The term of this Agreement shall commence on the effective date of this Agreement and shall\nterminate on the TERMINATION DATE, during which time the Influencer will create Instagram\ncontent (as described above) for 10 days out of the month of December and one in-feed post\nthat must  be deleted within one year following its publication. The content shall clearly\nidentify the Brand by stating its name and tagging its official Instagram account. The Influencer\nmay choose which days in week to post the content for Brand's advertising campaign.\nBeyond the 3 days of stories and the in-feed post, the Influencer is free to publish any additional\ncontent, featuring the Brand and its products - with respect to the Brand's intellectual property. \n\"\n\nquery : find the difference in contract text in the context of the template text\nand provide it in brief",
+    "input: \"template text\" : \"The term of this Agreement shall commence on the effective date of this Agreement and shall\nterminate on the TERMINATION DATE, during which time the Influencer will create Instagram\ncontent (as described above) for 3 days out of the month of ____________ and one in-feed post\nthat shall not be deleted within one year following its publication. The content shall clearly\nidentify the Brand by stating its name and tagging its official Instagram account. The Influencer\nmay choose which days in ____________ to post the content for Brand’s advertising campaign.\nBeyond the 3 days of stories and the in-feed post, the Influencer is free to publish any additional\ncontent, featuring the Brand and its products – with respect to the Brand’s intellectual property. \n\"\n\n\"contract text\" : \"The term of this Agreement shall commence on the effective date of this Agreement and shall\nterminate on the TERMINATION DATE, during which time the Influencer will create Instagram\ncontent (as described above) for 10 days out of the month of December and one in-feed post\nthat must  be deleted within one year following its publication. The content shall clearly\nidentify the Brand by stating its name and tagging its official Instagram account. The Influencer\nmay choose which days in week to post the content for Brand’s advertising campaign.\nBeyond the 3 days of stories and the in-feed post, the Influencer is free to publish any additional\ncontent, featuring the Brand and its products – with respect to the Brand’s intellectual property. \n\"\n\nquery : find the difference in contract text in the context of the template text\nand provide it in brief",
     "output: 1. contract text it says that  influencer will create reels\n 10 days.\n2. contract text says to delete the reels within one year.,"""
+
+    self.dev_text = """ input: \"template text\" : \"This Joint Venture Agreement (\"Agreement\") is entered into on [Date], by and between:Party A: [Name of Party A], a [Type of Entity] organized and existing under the laws of [Country], with its principal place of business at [Address].Party B: [Name of Party B], a  [Type of Entity] organized and existing under the laws of [Country], with its principal place of business at [Address].\"\n\n\"contract text\" : \"This Joint Venture Agreement (\"Agreement\") is , made between:Party A: maverricks Industries Inc., a corporation organized and existing under the laws of the State of California, which is located at 123 Main Street, Los Angeles, California.Party B: shallesish Enterprises Ltd., a company under the laws of the United Kingdom\n\"\n\nquery : provide the word in contract text which shows the deviation  with template text",
+    "output: \"\"",
+    "input: \"template text\" : \"Formation of Joint Venture: The Parties hereby agree to form the Joint Venture in accordance with the terms and conditions of this Agreement and applicable laws.Purpose: The purpose of the Joint Venture shall be to develop, market, and sell a new software product.Management: The management of the Joint Venture shall be conducted by a board of directors consisting of three directors, with each Party appointing one director and jointly appointing the third director.Capital Contribution: Each Party shall contribute to the Joint Venture the following capital contribution: ABC Industries Inc. shall contribute $500,000 in cash, and XYZ Enterprises Ltd. shall contribute $300,000 in cash.Distribution of Profits and Losses: Profits and losses of the Joint Venture shall be distributed among the Parties in proportion to their respective ownership interests.Confidentiality: The Parties agree to maintain the confidentiality of all information relating to the Joint Venture and its operations.Term and Termination: The Joint Venture shall commence on the date of this Agreement and shall continue until terminated by mutual agreement of the Parties.Governing Law: This Agreement shall be governed by and construed in accordance with the laws of the State of California.\n\"\n\nquery : provide the word in contract text which shows the deviation  with template text\n\nPurpose: The purpose of the Joint Venture shall be to develop, market, and sell a new software product.\n\nManagement: The management of the Joint Venture shall be conducted by a board of directors consisting of three directors, with each Party appointing one director and jointly appointing the third director.\n\nDistribution of Profits and Losses: Profits and losses of the Joint Venture shall be entitled to mavericks Industries Inc.\n\nConfidentiality: The Parties agree to maintain the confidentiality of all information relating to the Joint Venture and its operations.\n\nTerm and Termination: The Joint Venture shall commence on the date of this Agreement and shall continue until terminated by mutual agreement of the Parties.\n\"\n\nquery : provide the word in contract text which shows the deviation  with template text",
+    "output: \"Joint Venture shall be entitled to mavericks Industries Inc.\"",
+    "input: \"template text\" : \"The term of this Agreement shall commence on the effective date of this Agreement and shall\nterminate on the TERMINATION DATE, during which time the Influencer will create Instagram\ncontent (as described above) for 3 days out of the month of ____________ and one in-feed post\nthat shall not be deleted within one year following its publication. The content shall clearly\nidentify the Brand by stating its name and tagging its official Instagram account. The Influencer\nmay choose which days in ____________ to post the content for Brand’s advertising campaign.\nBeyond the 3 days of stories and the in-feed post, the Influencer is free to publish any additional\ncontent, featuring the Brand and its products – with respect to the Brand’s intellectual property. \n\"\n\n\"contract text\" : \"The term of this Agreement shall commence on the effective date of this Agreement and shall\nterminate on the TERMINATION DATE, during which time the Influencer will create Instagram\ncontent (as described above) for 10 days out of the month of December and one in-feed post\nthat must  be deleted within one year following its publication. The content shall clearly\nidentify the Brand by stating its name and tagging its official Instagram account. The Influencer\nmay choose which days in week to post the content for Brand’s advertising campaign.\nBeyond the 3 days of stories and the in-feed post, the Influencer is free to publish any additional\ncontent, featuring the Brand and its products – with respect to the Brand’s intellectual property. \n\"\n\nquery : provide the word in contract text which shows the deviation  with template text",
+    "output: \" for 10 days \" , \" must  be deleted within one year\"",
+    "input: \"template text\" : \"6. TERMINATION\nYou and COMPANY NAME may each terminate this Agreement in writing at any time, for any\nreason. Termination will be effective on the date of such notice. Trendful will pay the Influencer\nfifty percent (50%) of any work produced prior to posting and paid in full for any asset published\non social media platforms, on a pro rate basis described in Section 5.\n\n\"\n\n\"contract text\" : \"6. TERMINATION\nYou and Info-Tech may each terminate this Agreement in writing at any time, for any\nreason. Termination will be effective on the date of such notice. Trendful will pay the Influencer\nthirty percent (20%) of any work produced prior to posting and paid in full for any asset published\non social media platforms, on a pro rate basis described in Section 10.\n\n\"\n\nquery : provide the word in contract text which shows the deviation  with template text.",
+    "output: \"Info-Tech\", \"thirty percent (20%)\", \"Section 10\""""
     
 
   def individual_comparator(self , template_text , contract_text):
@@ -47,6 +59,16 @@ class TextComparison:
       
       # Generate content for the last pair using the combined input
       result = self.model.generate_content([self.combined_input])
+      
+      self.dev_text += f"input: \"template text\" : \"{template_text}\"\n\n\"contract text\" : \"{contract_text}\"\n\nquery : query : provide the word in contract text which shows the deviation  with template text."
+      
+      # Generate content for the last pair using the combined input
+      result1 = self.model.generate_content([self.dev_text])
+      words = re.findall(r'\\(.?)\\*', result1.text)
+
+      for i in range(len(words)):
+        words[i] = words[i].replace('"', '')
+        self.dev_list.append(words[i])
       
       
       print("dummy comparator method")
@@ -61,9 +83,9 @@ class TextComparison:
 
     for heading, paragraph in self.paragraphs_contract.items():
        if heading in self.paragraphs_template:
-          result = self.individual_comparator(self.paragraphs_template[heading] , paragraph )
+          deviation_text = self.individual_comparator(self.paragraphs_template[heading] , paragraph )
           dict_heading.append(heading)
-          dict_text.append(result)
+          dict_text.append(deviation_text)
        else :
           print("heading is missing \n The heading is not present in the provided template or old contract\n\n")
           
@@ -77,11 +99,12 @@ class TextComparison:
     # and the dict was not hashable which was require by the control flow contractvalidatior.py file function , hence changed the dict to tuple which is hashable
     self.dict = tuple(temp_dict.items())
 
-    return self.dict
+    print(self.dev_list)
+
+    return self.dict , self.dev_list
       
 
   def printComparison(self):
     print("dummy comparator print method")
     for key, value in self.dict.items():
       print(f"Key: {key}, Value: {value}")
-
