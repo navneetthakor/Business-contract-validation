@@ -43,7 +43,7 @@ export default function ChatBoard() {
       }
     });
 
-    setUniqueEntities(uniqueEntitiesList);
+    return (uniqueEntitiesList);
   };
 
   // whene user selects template
@@ -70,17 +70,17 @@ export default function ChatBoard() {
 
   // view history
   const viewHistory = (data) => {
-    // extractUniqueEntities(data.ner_dic);
-    // const newCompare = data.compare_dic?.filter((tuple) => {
-    //   return tuple[1] && tuple[1].trim() !== "false";
-    // });
+    const list = extractUniqueEntities(data.ner_dic);
+    const newCompare = data.compare_dic?.filter((tuple) => {
+      return tuple[1] && tuple[1].trim() !== "false";
+    });
 
     setResult(() => ({
       uploaded_pdf: data.uploaded_pdf,
       highlighted_pdf: data.highlighted_pdf,
       summary: data.summary,
-      ner_dic: data.ner_dic,
-      compare_dic: data.compare_dic,
+      ner_dic: list,
+      compare_dic: newCompare,
       resultStatus: 'present'
     }));
 
@@ -97,7 +97,6 @@ export default function ChatBoard() {
   const handleInputChange = (event) => {
     const selectedCompany = event.target.value;
     setUpLoadedData({ ...uploadedData, company: selectedCompany });
-    console.log(uploadedData.company);
   };
 
   // to fetch result
@@ -109,7 +108,6 @@ export default function ChatBoard() {
     formData.append("company", uploadedData.company);
     formData.append("templateUrl", uploadedData.templateUrl);
     setResult(() => ({...result, resultStatus: 'processing'}))
-    console.log(formData);
 
     const url = `${process.env.REACT_APP_BACKEND_IP}/django/fetchdetails`;
     try {
@@ -129,22 +127,18 @@ export default function ChatBoard() {
         setResult(() => ({...result, resultStatus: 'none'}))
         return;
       }
-      console.log("between")
-      console.log("after")
-      // extractUniqueEntities(json.data.ner_dic);
+      const list = extractUniqueEntities(json.data.ner_dic);
       const newCompare = json.data.compare_dic?.filter((tuple) => {
-          return tuple[1] && tuple[1].trim() !== "false";
+          return tuple[1] && tuple[1].trim() != "false";
         });
-      console.log("uptil here")
       setResult({
         uploaded_pdf: json.data.uploaded_pdf,
         highlighted_pdf: json.data.highlighted_pdf,
         summary: json.data.summary,
-        ner_dic: json.data.ner_dic,
-        compare_dic: json.data.compare_dic,
+        ner_dic: list,
+        compare_dic: newCompare,
         resultStatus: 'present' 
       })
-      console.log("result : ", result);
       
       // if (result.resultStatus === "none") return;
     } catch (error) {
@@ -166,7 +160,6 @@ export default function ChatBoard() {
       },
     });
     const data = await response.json();
-    console.log(data);
 
     if (data.success || data.signal === "green") {
       setTemplates(data.templates);
@@ -182,7 +175,6 @@ export default function ChatBoard() {
       },
     });
     const data2 = await response2.json();
-    console.log(data2);
 
     if (data2.success || data2.signal === "green") {
       setCompany(data2.history);
@@ -252,7 +244,6 @@ export default function ChatBoard() {
     formData.append("url", settings.url);
     formData.append("version", settings.version);
     
-    console.log(formData);
     const method =
       settings.mode === "add"
         ? "POST"
@@ -271,7 +262,6 @@ export default function ChatBoard() {
       });
     }
     else{
-      console.log(settings.version);
       response = await fetch(url, {
         method: method,
         headers: {
@@ -282,7 +272,6 @@ export default function ChatBoard() {
       });
     }
     const data = await response.json();
-    console.log(data);
     
     if (!data.success || data.signal === "red") {
       alert("feild");
