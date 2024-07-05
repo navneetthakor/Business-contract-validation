@@ -11,8 +11,9 @@ export default function ChatBoard() {
     uploaded_pdf: "",
     highlighted_pdf: "",
     summary: "",
-    ner_dic: "",
-    compare_dic: "",
+    ner_dic: [],
+    compare_dic: [],
+    resultStatus: "none"
   };
 
   const [settings, setSettings] = useState({
@@ -22,7 +23,6 @@ export default function ChatBoard() {
   });
   const [settingsStatus, setSettingsStatus] = useState("none");
   const [result, setResult] = useState(dummyResult);
-  const [resultStatus, setResultStatus] = useState("none");
   const [templates, setTemplates] = useState([]);
   const [company, setCompany] = useState([]);
   const [uniqueEntities, setUniqueEntities] = useState([]);
@@ -70,21 +70,21 @@ export default function ChatBoard() {
 
   // view history
   const viewHistory = (data) => {
-    extractUniqueEntities(data.ner_dic);
-    const newCompare = data.compare_dic?.filter((tuple) => {
-      return tuple[1] && tuple[1].trim() !== "false";
-    });
+    // extractUniqueEntities(data.ner_dic);
+    // const newCompare = data.compare_dic?.filter((tuple) => {
+    //   return tuple[1] && tuple[1].trim() !== "false";
+    // });
 
     setResult(() => ({
       uploaded_pdf: data.uploaded_pdf,
       highlighted_pdf: data.highlighted_pdf,
       summary: data.summary,
-      ner_dic: uniqueEntities,
-      compare_dic: newCompare,
+      ner_dic: data.ner_dic,
+      compare_dic: data.compare_dic,
+      resultStatus: 'present'
     }));
 
     document.getElementById("modal2_close").click();
-    setResultStatus("present");
   };
 
   // function for other selected
@@ -108,7 +108,7 @@ export default function ChatBoard() {
     formData.append("url", file);
     formData.append("company", uploadedData.company);
     formData.append("templateUrl", uploadedData.templateUrl);
-    setResultStatus(() => "processing");
+    setResult(() => ({...result, resultStatus: 'processing'}))
     console.log(formData);
 
     const url = `${process.env.REACT_APP_BACKEND_IP}/django/fetchdetails`;
@@ -126,31 +126,31 @@ export default function ChatBoard() {
 
       if (!json.success) {
         alert("Failed");
-        setResultStatus(() => "none");
+        setResult(() => ({...result, resultStatus: 'none'}))
         return;
       }
-      if (resultStatus === "none") return;
-
-      extractUniqueEntities(json.data.ner_dic);
+      console.log("between")
+      console.log("after")
+      // extractUniqueEntities(json.data.ner_dic);
       const newCompare = json.data.compare_dic?.filter((tuple) => {
-        return tuple[1] && tuple[1].trim() !== "false";
-      });
-      setResult(() => ({
+          return tuple[1] && tuple[1].trim() !== "false";
+        });
+      console.log("uptil here")
+      setResult({
         uploaded_pdf: json.data.uploaded_pdf,
         highlighted_pdf: json.data.highlighted_pdf,
         summary: json.data.summary,
-        ner_dic: uniqueEntities,
-        compare_dic: newCompare,
-      }));
+        ner_dic: json.data.ner_dic,
+        compare_dic: json.data.compare_dic,
+        resultStatus: 'present' 
+      })
       console.log("result : ", result);
-
-      setResultStatus(() => "present");
+      
+      // if (result.resultStatus === "none") return;
     } catch (error) {
       console.error("Error during file upload:", error);
       alert("Failed");
-    } finally {
-      // Reset the file input value to allow re-uploading the same file if needed
-      event.target.value = null;
+      setResult(() => ({...result, resultStatus: 'none'}))
     }
   };
 
@@ -299,11 +299,16 @@ export default function ChatBoard() {
     setSettings(() => ({ ...settings, url: e.target.files[0] }));
   };
 
+  // for sidebar 
+  const handleClick = () => {
+    setResult({...result, resultStatus : 'none'});
+  }
+
   // actual returning data ---------
   return (
     <div className="w-[100%] h-[88vh] flex justify-around relative z-1 pt-5 overflow-y-clip">
       {/* sidebar */}
-      <Sidebar setResultStatus={setResultStatus} />
+      <Sidebar handleClick={handleClick} />
 
       {/* chat area  */}
       <div
@@ -315,13 +320,13 @@ export default function ChatBoard() {
       >
         {/* inital text by ai  */}
 
-        {resultStatus === "none" && ChatArea}
-        {resultStatus === "processing" && localLoader}
-        {resultStatus === "present" && <Deviations result={result} />}
+        {result.resultStatus === "none" && ChatArea}
+        {result.resultStatus === "processing" && localLoader}
+        {result.resultStatus === "present" && <Deviations result={result} />}
       </div>
 
       {/* button  */}
-      {resultStatus === "none" && (
+      {result.resultStatus === "none" && (
         <div
           onClick={() => document.getElementById("company_modal").showModal()}
           className="fixed z-[100] bottom-[8vh] left-[43vw] border hover:bg-blue-600 bg-blue-500 w-[40vw] h-[7vh] shadow-blue-500 border-none shadow-lg flex items-center justify-center text-white font-bold rounded-lg cursor-pointer"

@@ -61,7 +61,7 @@ const createUser = async(req,res) => {
         // creating template record for this user 
         const templateRec = new Template({
             user_id: newUser._id,
-            templates: []
+            templates: [{"version": "Default template", "url" : "https://res.cloudinary.com/deziazvyp/image/upload/v1720014577/pdfs/software%20agreement.pdf"}]
         })
         templateRec.save();
     

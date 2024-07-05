@@ -40,7 +40,7 @@ class TextComparison:
       return None
 
   def find_deviation_words(self, template_text, contract_text):
-    combined_input = f"input: \"template text\": \"{template_text}\"\n\n\"contract text\": \"{contract_text}\"\n\nquery: provide the word in contract text which shows the deviation with template text."
+    combined_input = f"input: \"template text\": \"{template_text}\"\n\n\"contract text\": \"{contract_text}\"\n\nquery: accurately provide only those words in contract text which shows the deviation with template text."
 
     try:
       result = self.model.generate_content([combined_input])

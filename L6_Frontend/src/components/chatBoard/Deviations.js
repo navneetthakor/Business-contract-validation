@@ -90,7 +90,7 @@ const Deviations = (props) => {
               </tr>
             </thead>
             <tbody>
-              {result?.ner_dic?.map((item, index) => (
+              {result.ner_dic?.map((item, index) => (
                 <tr key={index}>
                   <th> {item.key}</th>
                   <th> {item.value[0]}</th>
