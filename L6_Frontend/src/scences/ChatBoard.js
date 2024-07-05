@@ -126,7 +126,7 @@ export default function ChatBoard() {
 
       if (!json.success) {
         alert("Failed");
-        setResultStatus("none");
+        setResultStatus(() => "none");
         return;
       }
       if (resultStatus === "none") return;
@@ -144,7 +144,7 @@ export default function ChatBoard() {
       }));
       console.log("result : ", result);
 
-      setResultStatus("present");
+      setResultStatus(() => "present");
     } catch (error) {
       console.error("Error during file upload:", error);
       alert("Failed");

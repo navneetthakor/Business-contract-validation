@@ -14,7 +14,6 @@ const UserHistorySchema = new Schema({
       company: {
         type: String,
         required: true,
-        unique: true
       },
       data: [
         {

@@ -40,7 +40,8 @@ const createUser = async(req,res) => {
         const salt = await bcrypt.genSaltSync(10);
         const securePas = await bcrypt.hashSync(req.body.password, salt);
         // creating and saving user in backend 
-        let imgPath = req.file.path.replace(/\\/g, '/');
+        let imgPath;
+        if(req.file) imgPath = req.file.path.replace(/\\/g, '/');
         const newUser = new User({
             image: req.file ? imgPath : "",
             username: req.body.username,
