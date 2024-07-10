@@ -4,7 +4,7 @@ from pdfparser.pdfparser import PdfParser
 from ner.ner import Ner
 from textclassifier.heading_classify import classify
 from textclassifier.textclassifier import TextClassifier
-from textcomparison.textcomparison import TextComparison
+from textcomparison.textcomparison2 import TextComparison
 from summary.summary import Summary
 
 def get_pdf(key):
